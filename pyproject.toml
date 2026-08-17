@@ -1,0 +1,16 @@
+[project]
+name = "Orthogonal_codes_hrtf"
+version = "0.1.0"
+requires-python = ">=3.13"
+
+dependencies = [
+    "numpy>=2.5",
+    "scipy>=1.18",
+    "soundfile>=0.14",
+    "matplotlib>=3.11",
+    "h5py>=3.16",
+    "pandas>=3.0",
+]
+
+[tool.poetry]
+package-mode = false
