@@ -9,7 +9,7 @@ python generate_bundle.py --speakers 4 --golay-n 17 --mls-m 17 --gold-m 16 --gua
 ## 1. sesja, 2 źródła
 
 ```
-python decode_bundle.py --bundle-dir bundle_out_1_sesja_2_glosniki --recording nagrania/1sesja.wav --all-methods --out-dir wyniki/1sesja
+python decode_bundle.py --bundle-dir bundle_out_1_sesja_2_glosniki --recording nagrania/1sesja.wav --all-methods --out-dir wyniki/1sesja --fmin-plot 60 --plot
 
 python calculate_metrics.py --decoded-dir wyniki/1sesja --bundle-manifest bundle_out_1_sesja_2_glosniki/manifest.json --calibration-recording calibration/1_sesja_cal.wav --calibration-manifest calibration/calibration_manifest.json
 ```
