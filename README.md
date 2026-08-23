@@ -9,7 +9,7 @@ python generate_bundle.py --speakers 4 --golay-n 17 --mls-m 17 --gold-m 16 --gua
 ## 1. sesja, 2 źródła
 
 ```
-python decode_bundle.py --bundle-dir bundle_out_1_sesja_2_glosniki --recording nagrania/1sesja.wav --all-methods --out-dir wyniki/1sesja --fmin-plot 60 --plot
+python decode_bundle.py --bundle-dir bundle_out_1_sesja_2_glosniki --recording nagrania/1sesja.wav --ir-len 4096 --all-methods --out-dir wyniki/1sesja --plot --fmin-plot 60 --norm-hz 3000
 
 python calculate_metrics.py --decoded-dir wyniki/1sesja --bundle-manifest bundle_out_1_sesja_2_glosniki/manifest.json --calibration-recording calibration/1_sesja_cal.wav --calibration-manifest calibration/calibration_manifest.json
 ```
@@ -17,7 +17,7 @@ python calculate_metrics.py --decoded-dir wyniki/1sesja --bundle-manifest bundle
 ## 2. sesja, 2 źródła
 
 ```
-python decode_bundle.py --bundle-dir bundle_out_2_sesja_2_glosniki --recording nagrania/2sesja2spk.wav --ir-len 24000 --all-methods --out-dir wyniki/2sesja/2spk
+python decode_bundle.py --bundle-dir bundle_out_2_sesja_2_glosniki --recording nagrania/2sesja2spk.wav --ir-len 4096 --all-methods --out-dir wyniki/2sesja/2spk --plot --fmin-plot 1500 --norm-hz 3000
 
 python calculate_metrics.py --decoded-dir wyniki/2sesja/2spk --bundle-manifest bundle_out_2_sesja_2_glosniki/manifest.json --noise-wav nagrania/2sesja2spk.wav --bands "2000,4000,8000,16000"
 ```
@@ -25,7 +25,7 @@ python calculate_metrics.py --decoded-dir wyniki/2sesja/2spk --bundle-manifest b
 ## 2. sesja, 4 źródła
 
 ```
-python decode_bundle.py --bundle-dir bundle_out_2_sesja_4_glosniki --recording nagrania/2sesja4spk.wav --ir-len 24000 --all-methods --out-dir wyniki/2sesja/4spk
+python decode_bundle.py --bundle-dir bundle_out_2_sesja_4_glosniki --recording nagrania/2sesja4spk.wav --ir-len 4096 --all-methods --out-dir wyniki/2sesja/4spk --plot --fmin-plot 1500 --norm-hz 3000
 
 python calculate_metrics.py --decoded-dir wyniki/2sesja/4spk --bundle-manifest bundle_out_2_sesja_4_glosniki/manifest.json --noise-wav calibration/2_sesja_cal.wav --bands "2000,4000,8000,16000"
 ```

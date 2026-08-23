@@ -245,6 +245,7 @@ PLOT_PAIRS = [
     ("mls",            ["solo_mls", "mls_hadamard"]),
     ("mls_reciprocal", ["solo_mls", "mls_reciprocal"]),
     ("gold",           ["gold"]),
+    ("gold_vs_solo",   ["gold", "solo_mls", "solo_golay"]),
 ]
 
 
@@ -296,6 +297,14 @@ def _fft_curve(ir, fs):
     return f, mag_db, mag_sm
 
 
+def _normalize_at(f, mag_db, mag_sm, norm_hz):
+    if not norm_hz or f.size == 0:
+        return mag_db, mag_sm
+    idx = int(np.argmin(np.abs(f - float(norm_hz))))
+    offset = float(mag_sm[idx])
+    return mag_db - offset, mag_sm - offset
+
+
 def _fft_figure(n_spk, title):
     fig, axes = plt.subplots(n_spk, 1, figsize=(14, 3 + 3 * n_spk),
                              squeeze=False, sharex=True)
@@ -314,15 +323,21 @@ def _save_fft_figure(axes, out_path):
     plt.close()
 
 
-def plot_methods_per_speaker(keys, all_decoded, title, out_path, n_spk, fs):
+def plot_methods_per_speaker(keys, all_decoded, title, out_path, n_spk, fs, norm_hz=None):
     axes = _fft_figure(n_spk, title)
     for j, ax in enumerate(axes):
         for key in keys:
             method = METHOD[key]
             f, mag_db, mag_sm = _fft_curve(all_decoded[key][j], fs)
+            mag_db, mag_sm = _normalize_at(f, mag_db, mag_sm, norm_hz)
             ax.plot(f, mag_db, color=method.color, alpha=0.15, lw=0.5)
             ax.plot(f, mag_sm, color=method.color, lw=1.4, label=method.label)
-        ax.set_ylabel(f"spk{j + 1}  |H(f)| [dB]")
+        if norm_hz:
+            ax.axvline(float(norm_hz), color="0.4", ls="--", lw=1.0)
+            ax.axhline(0.0, color="0.4", ls=":", lw=1.0)
+            ax.set_ylabel(f"spk{j + 1}  |H(f)| [dB] (0 dB @ {int(norm_hz)} Hz)")
+        else:
+            ax.set_ylabel(f"spk{j + 1}  |H(f)| [dB]")
 
     _save_fft_figure(axes, out_path)
     print(f"Wykres: {out_path}")
@@ -338,6 +353,8 @@ def main():
     p.add_argument("--out-dir", type=str, default=None)
     p.add_argument("--all-methods", action="store_true")
     p.add_argument("--fmin-plot", type=float, default=FMIN_PLOT_HZ)
+    p.add_argument("--norm-hz", type=float, default=None,
+                   help="Dodatkowe wykresy z wyrownaniem poziomu do zadanej f [Hz], np. 3000")
     args = p.parse_args()
 
     FMIN_PLOT_HZ = args.fmin_plot
@@ -376,24 +393,31 @@ def main():
 
     if args.plot:
         okt = f"1/{FFT_SMOOTH_FRACTION} okt."
-        for suffix, keys in PLOT_PAIRS:
-            if not all(k in all_decoded for k in keys):
-                continue
-            label = " vs ".join(METHOD[k].label for k in keys)
-            plot_methods_per_speaker(
-                keys, all_decoded,
-                title=f"{label} ({n_spk} spk) - charakterystyki czestotliwosciowe ({okt})",
-                out_path=os.path.join(out_dir, f"fft_{n_spk}spk_{suffix}.png"),
-                n_spk=n_spk, fs=fs)
+        norm_variants = [(None, "")]
+        if args.norm_hz:
+            norm_variants.append((args.norm_hz, f"_norm{int(args.norm_hz)}"))
 
-        present = [m.key for m in METHODS if m.key in all_decoded]
-        if present:
-            plot_methods_per_speaker(
-                present, all_decoded,
-                title=f"Charakterystyki czestotliwosciowe - {len(present)} metod "
-                      f"({n_spk} spk, {okt})",
-                out_path=os.path.join(out_dir, "fft_all_methods.png"),
-                n_spk=n_spk, fs=fs)
+        for norm_hz, tag in norm_variants:
+            norm_txt = f", 0 dB @ {int(norm_hz)} Hz" if norm_hz else ""
+            for suffix, keys in PLOT_PAIRS:
+                if not all(k in all_decoded for k in keys):
+                    continue
+                label = " vs ".join(METHOD[k].label for k in keys)
+                plot_methods_per_speaker(
+                    keys, all_decoded,
+                    title=f"{label} ({n_spk} spk) - charakterystyki "
+                          f"czestotliwosciowe ({okt}{norm_txt})",
+                    out_path=os.path.join(out_dir, f"fft_{n_spk}spk_{suffix}{tag}.png"),
+                    n_spk=n_spk, fs=fs, norm_hz=norm_hz)
+
+            present = [m.key for m in METHODS if m.key in all_decoded]
+            if present:
+                plot_methods_per_speaker(
+                    present, all_decoded,
+                    title=f"Charakterystyki czestotliwosciowe - {len(present)} metod "
+                          f"({n_spk} spk, {okt}{norm_txt})",
+                    out_path=os.path.join(out_dir, f"fft_all_methods{tag}.png"),
+                    n_spk=n_spk, fs=fs, norm_hz=norm_hz)
 
 
 if __name__ == "__main__":
