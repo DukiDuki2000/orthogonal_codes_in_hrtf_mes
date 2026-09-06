@@ -5,13 +5,16 @@ from dataclasses import dataclass
 
 import numpy as np
 import soundfile as sf
-from scipy.signal import fftconvolve
+from scipy.signal import fftconvolve, chirp, correlate
+from scipy.stats import theilslopes
+import samplerate
 import matplotlib.pyplot as plt
 
 FMAX_HZ = 20000.0
 FMIN_PLOT_HZ = 60.0
 FFT_SMOOTH_FRACTION = 3
 FFT_SMOOTH_FMIN = 20.0
+DRIFT_QUALITY = "sinc_best"
 
 def read_wav_mono(path):
     data, fs = sf.read(path, always_2d=False)
@@ -76,8 +79,7 @@ def linear_chirp(fs, dur_s, f0=600.0, f1=6000.0, amp=0.6):
     if n <= 0:
         return np.zeros(0)
     t = np.arange(n, dtype=float) / fs
-    k = (f1 - f0) / max(dur_s, 1e-12)
-    sig = amp * np.sin(2.0 * np.pi * (f0 * t + 0.5 * k * t * t))
+    sig = amp * chirp(t, f0=f0, t1=max(dur_s, 1e-12), f1=f1, method="linear", phi=-90)
     fade = int(min(n // 10, fs * 0.005))
     if fade > 0:
         ramp = np.linspace(0.0, 1.0, fade)
@@ -86,29 +88,63 @@ def linear_chirp(fs, dur_s, f0=600.0, f1=6000.0, amp=0.6):
     return sig
 
 
-def find_offset(y, meta, fs):
+def _pozycja_chirpu(y, expected, ref, margin):
+    lo = max(0, expected - margin)
+    okno = y[lo:min(len(y), expected + margin + len(ref))]
+    if okno.size < ref.size:
+        return None
+    corr = np.abs(correlate(okno, ref, mode="valid", method="fft"))
+    return lo + int(np.argmax(corr)) - expected
+
+
+def measure_drift(y, meta, fs):
+
     syncs = [s for s in meta["segments"] if s["kind"] == "sync"]
-    if not syncs:
-        return 0
+    if len(syncs) < 2:
+        return np.zeros(0), np.zeros(0)
 
-    first_sync = syncs[0]
-    chirp_ref = linear_chirp(fs, (first_sync["end"] - first_sync["start"]) / fs)
-    chirp_len = len(chirp_ref)
-    search_margin = 2 * fs
+    ref = linear_chirp(fs, (syncs[0]["end"] - syncs[0]["start"]) / fs)
+    margin = 2 * int(fs)
+    zgrubny = _pozycja_chirpu(y, syncs[0]["start"], ref, margin)
+    if zgrubny is None:
+        return np.zeros(0), np.zeros(0)
 
-    offsets = []
+    pad = 200
+    wytnij = lambda s: y[s["start"] + zgrubny - pad:
+                         s["start"] + zgrubny + len(ref) + pad]
+    wzor = wytnij(syncs[0])
+
+    times, shifts = [], []
     for sync in syncs:
-        expected = sync["start"]
-        lo = max(0, expected - search_margin)
-        hi = min(len(y), expected + search_margin + chirp_len)
-        if hi - lo < chirp_len:
+        frag = wytnij(sync)
+        if frag.size != wzor.size:
             continue
-        corr = fftconvolve(y[lo:hi], chirp_ref[::-1], mode='valid')
-        offsets.append(lo + int(np.argmax(np.abs(corr))) - expected)
+        corr = np.abs(correlate(frag, wzor, mode="same", method="fft"))
+        i = int(np.argmax(corr))
+        d = float(i - corr.size // 2)
+        if 0 < i < corr.size - 1:
+            kw, lin, _ = np.polyfit([-1.0, 0.0, 1.0], corr[i - 1:i + 2], 2)
+            if kw != 0.0:
+                d -= lin / (2.0 * kw)
+        times.append(sync["start"] / fs)
+        shifts.append(d)
+    return np.asarray(times), np.asarray(shifts)
 
-    if not offsets:
-        return 0
-    return int(np.median(offsets))
+
+def correct_drift(y, meta, fs, quality=DRIFT_QUALITY):
+    times, shifts = measure_drift(y, meta, fs)
+    if times.size < 2:
+        return y, 0
+
+    a, b, _, _ = theilslopes(shifts, times)
+    eps = a / fs
+    y2 = samplerate.resample(np.asarray(y, dtype=np.float64), 1.0 / (1.0 + eps), quality)
+
+    _, shifts2 = measure_drift(y2, meta, fs)
+    syncs = [s for s in meta["segments"] if s["kind"] == "sync"]
+    ref = linear_chirp(fs, (syncs[0]["end"] - syncs[0]["start"]) / fs)
+    offset = _pozycja_chirpu(y2, syncs[0]["start"], ref, 2 * int(fs))
+    return y2, int(offset or 0)
 
 
 def decode_solo_golay(y, meta, ir_len):
@@ -254,8 +290,7 @@ def compute_fft_mag_db(ir, fs, fmax=None):
     x = np.asarray(ir, dtype=float)
     if x.size == 0:
         return np.zeros(0), np.zeros(0)
-    w = np.hanning(x.size)
-    X = np.fft.rfft(x * w)
+    X = np.fft.rfft(x)
     mag = np.abs(X)
     mag_db = 20.0 * np.log10(np.maximum(mag, 1e-12))
     f = np.fft.rfftfreq(x.size, d=1.0 / fs)
@@ -369,7 +404,7 @@ def main():
 
     fs_rec, y = read_wav_mono(args.recording)
 
-    offset = find_offset(y, meta, fs)
+    y, offset = correct_drift(y, meta, fs, quality=args.drift_quality)
     for seg in meta["segments"]:
         seg["start"] += offset
         seg["end"] += offset
