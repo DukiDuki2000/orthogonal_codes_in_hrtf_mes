@@ -1,4 +1,5 @@
 {
+  "excitation_gain": 0.85,
   "speakers": 2,
   "fs": 48000,
   "golay_n": 17,
@@ -12,374 +13,381 @@
   "guard": 96000,
   "segments": [
     {
+      "name": "start_delay",
+      "kind": "silence",
+      "start": 0,
+      "end": 480000,
+      "fs": 48000
+    },
+    {
       "name": "sync_noise_floor",
       "kind": "sync",
-      "start": 0,
-      "end": 1920,
+      "start": 480000,
+      "end": 481920,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_noise_floor",
       "kind": "silence",
-      "start": 1920,
-      "end": 11520,
+      "start": 481920,
+      "end": 491520,
       "fs": 48000
     },
     {
       "name": "noise_floor",
       "kind": "silence",
-      "start": 11520,
-      "end": 251520,
+      "start": 491520,
+      "end": 731520,
       "fs": 48000
     },
     {
       "name": "gap_after_noise_floor",
       "kind": "silence",
-      "start": 251520,
-      "end": 261120,
+      "start": 731520,
+      "end": 741120,
       "fs": 48000
     },
     {
       "name": "sync_solo_golay",
       "kind": "sync",
-      "start": 261120,
-      "end": 263040,
+      "start": 741120,
+      "end": 743040,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_solo_golay",
       "kind": "silence",
-      "start": 263040,
-      "end": 272640,
+      "start": 743040,
+      "end": 752640,
       "fs": 48000
     },
     {
       "name": "solo_golay_spk1_A",
       "kind": "solo_golay_A",
-      "start": 272640,
-      "end": 499712,
+      "start": 752640,
+      "end": 979712,
       "fs": 48000
     },
     {
       "name": "solo_golay_spk1_B",
       "kind": "solo_golay_B",
-      "start": 499712,
-      "end": 726784,
+      "start": 979712,
+      "end": 1206784,
       "fs": 48000
     },
     {
       "name": "solo_golay_spk2_A",
       "kind": "solo_golay_A",
-      "start": 726784,
-      "end": 953856,
+      "start": 1206784,
+      "end": 1433856,
       "fs": 48000
     },
     {
       "name": "solo_golay_spk2_B",
       "kind": "solo_golay_B",
-      "start": 953856,
-      "end": 1180928,
+      "start": 1433856,
+      "end": 1660928,
       "fs": 48000
     },
     {
       "name": "gap_after_solo_golay",
       "kind": "silence",
-      "start": 1180928,
-      "end": 1190528,
+      "start": 1660928,
+      "end": 1670528,
       "fs": 48000
     },
     {
       "name": "sync_solo_mls",
       "kind": "sync",
-      "start": 1190528,
-      "end": 1192448,
+      "start": 1670528,
+      "end": 1672448,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_solo_mls",
       "kind": "silence",
-      "start": 1192448,
-      "end": 1202048,
+      "start": 1672448,
+      "end": 1682048,
       "fs": 48000
     },
     {
       "name": "solo_mls_spk1",
       "kind": "solo_mls",
-      "start": 1202048,
-      "end": 1429119,
+      "start": 1682048,
+      "end": 1909119,
       "fs": 48000
     },
     {
       "name": "solo_mls_spk2",
       "kind": "solo_mls",
-      "start": 1429119,
-      "end": 1656190,
+      "start": 1909119,
+      "end": 2136190,
       "fs": 48000
     },
     {
       "name": "gap_after_solo_mls",
       "kind": "silence",
-      "start": 1656190,
-      "end": 1665790,
+      "start": 2136190,
+      "end": 2145790,
       "fs": 48000
     },
     {
       "name": "sync_golay_hadamard",
       "kind": "sync",
-      "start": 1665790,
-      "end": 1667710,
+      "start": 2145790,
+      "end": 2147710,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_golay_hadamard",
       "kind": "silence",
-      "start": 1667710,
-      "end": 1677310,
+      "start": 2147710,
+      "end": 2157310,
       "fs": 48000
     },
     {
       "name": "golay_had_row1_A",
       "kind": "golay_hadamard_A",
-      "start": 1677310,
-      "end": 1904382,
+      "start": 2157310,
+      "end": 2384382,
       "fs": 48000
     },
     {
       "name": "golay_had_row1_B",
       "kind": "golay_hadamard_B",
-      "start": 1904382,
-      "end": 2131454,
+      "start": 2384382,
+      "end": 2611454,
       "fs": 48000
     },
     {
       "name": "golay_had_row2_A",
       "kind": "golay_hadamard_A",
-      "start": 2131454,
-      "end": 2358526,
+      "start": 2611454,
+      "end": 2838526,
       "fs": 48000
     },
     {
       "name": "golay_had_row2_B",
       "kind": "golay_hadamard_B",
-      "start": 2358526,
-      "end": 2585598,
+      "start": 2838526,
+      "end": 3065598,
       "fs": 48000
     },
     {
       "name": "gap_after_golay_had",
       "kind": "silence",
-      "start": 2585598,
-      "end": 2595198,
+      "start": 3065598,
+      "end": 3075198,
       "fs": 48000
     },
     {
       "name": "sync_mls_hadamard",
       "kind": "sync",
-      "start": 2595198,
-      "end": 2597118,
+      "start": 3075198,
+      "end": 3077118,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_mls_hadamard",
       "kind": "silence",
-      "start": 2597118,
-      "end": 2606718,
+      "start": 3077118,
+      "end": 3086718,
       "fs": 48000
     },
     {
       "name": "mls_had_row1",
       "kind": "mls_hadamard",
-      "start": 2606718,
-      "end": 2833789,
+      "start": 3086718,
+      "end": 3313789,
       "fs": 48000
     },
     {
       "name": "mls_had_row2",
       "kind": "mls_hadamard",
-      "start": 2833789,
-      "end": 3060860,
+      "start": 3313789,
+      "end": 3540860,
       "fs": 48000
     },
     {
       "name": "gap_after_mls_had",
       "kind": "silence",
-      "start": 3060860,
-      "end": 3070460,
+      "start": 3540860,
+      "end": 3550460,
       "fs": 48000
     },
     {
       "name": "sync_mls_reciprocal",
       "kind": "sync",
-      "start": 3070460,
-      "end": 3072380,
+      "start": 3550460,
+      "end": 3552380,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_mls_reciprocal",
       "kind": "silence",
-      "start": 3072380,
-      "end": 3081980,
+      "start": 3552380,
+      "end": 3561980,
       "fs": 48000
     },
     {
       "name": "mls_reciprocal_pair",
       "kind": "mls_reciprocal",
-      "start": 3081980,
-      "end": 3309051,
+      "start": 3561980,
+      "end": 3789051,
       "fs": 48000
     },
     {
       "name": "gap_after_mls_reciprocal",
       "kind": "silence",
-      "start": 3309051,
-      "end": 3318651,
+      "start": 3789051,
+      "end": 3798651,
       "fs": 48000
     },
     {
       "name": "sync_gold",
       "kind": "sync",
-      "start": 3318651,
-      "end": 3320571,
+      "start": 3798651,
+      "end": 3800571,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_gold",
       "kind": "silence",
-      "start": 3320571,
-      "end": 3330171,
+      "start": 3800571,
+      "end": 3810171,
       "fs": 48000
     },
     {
       "name": "gold_all",
       "kind": "gold",
-      "start": 3330171,
-      "end": 3491706,
+      "start": 3810171,
+      "end": 3971706,
       "fs": 48000
     },
     {
       "name": "gap_after_gold",
       "kind": "silence",
-      "start": 3491706,
-      "end": 3501306,
+      "start": 3971706,
+      "end": 3981306,
       "fs": 48000
     },
     {
       "name": "sync_thd",
       "kind": "sync",
-      "start": 3501306,
-      "end": 3503226,
+      "start": 3981306,
+      "end": 3983226,
       "fs": 48000
     },
     {
       "name": "gap_after_sync_thd",
       "kind": "silence",
-      "start": 3503226,
-      "end": 3512826,
+      "start": 3983226,
+      "end": 3992826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_100Hz",
       "kind": "thd",
-      "start": 3512826,
-      "end": 3704826,
+      "start": 3992826,
+      "end": 4184826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_250Hz",
       "kind": "thd",
-      "start": 3704826,
-      "end": 3896826,
+      "start": 4184826,
+      "end": 4376826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_500Hz",
       "kind": "thd",
-      "start": 3896826,
-      "end": 4088826,
+      "start": 4376826,
+      "end": 4568826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_1000Hz",
       "kind": "thd",
-      "start": 4088826,
-      "end": 4280826,
+      "start": 4568826,
+      "end": 4760826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_2000Hz",
       "kind": "thd",
-      "start": 4280826,
-      "end": 4472826,
+      "start": 4760826,
+      "end": 4952826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_4000Hz",
       "kind": "thd",
-      "start": 4472826,
-      "end": 4664826,
+      "start": 4952826,
+      "end": 5144826,
       "fs": 48000
     },
     {
       "name": "thd_spk1_8000Hz",
       "kind": "thd",
-      "start": 4664826,
-      "end": 4856826,
+      "start": 5144826,
+      "end": 5336826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_100Hz",
       "kind": "thd",
-      "start": 4856826,
-      "end": 5048826,
+      "start": 5336826,
+      "end": 5528826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_250Hz",
       "kind": "thd",
-      "start": 5048826,
-      "end": 5240826,
+      "start": 5528826,
+      "end": 5720826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_500Hz",
       "kind": "thd",
-      "start": 5240826,
-      "end": 5432826,
+      "start": 5720826,
+      "end": 5912826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_1000Hz",
       "kind": "thd",
-      "start": 5432826,
-      "end": 5624826,
+      "start": 5912826,
+      "end": 6104826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_2000Hz",
       "kind": "thd",
-      "start": 5624826,
-      "end": 5816826,
+      "start": 6104826,
+      "end": 6296826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_4000Hz",
       "kind": "thd",
-      "start": 5816826,
-      "end": 6008826,
+      "start": 6296826,
+      "end": 6488826,
       "fs": 48000
     },
     {
       "name": "thd_spk2_8000Hz",
       "kind": "thd",
-      "start": 6008826,
-      "end": 6200826,
+      "start": 6488826,
+      "end": 6680826,
       "fs": 48000
     },
     {
       "name": "gap_after_thd",
       "kind": "silence",
-      "start": 6200826,
-      "end": 6210426,
+      "start": 6680826,
+      "end": 6690426,
       "fs": 48000
     }
   ]
