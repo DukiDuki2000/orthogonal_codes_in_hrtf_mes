@@ -1,0 +1,582 @@
+{
+  "fs": 48000,
+  "recording": "nagrania/2sesja4spk.wav",
+  "bundle_manifest": {
+    "speakers": 4,
+    "fs": 48000,
+    "golay_n": 17,
+    "golay_L": 131072,
+    "mls_m": 17,
+    "mls_L": 131071,
+    "mls_reciprocal_L": 131071,
+    "gold_m": 16,
+    "gold_L": 65535,
+    "hadamard_size": 4,
+    "guard": 96000,
+    "segments": [
+      {
+        "name": "start_delay",
+        "kind": "silence",
+        "start": 0,
+        "end": 480000,
+        "fs": 48000
+      },
+      {
+        "name": "sync_noise_floor",
+        "kind": "sync",
+        "start": 480000,
+        "end": 481920,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_noise_floor",
+        "kind": "silence",
+        "start": 481920,
+        "end": 491520,
+        "fs": 48000
+      },
+      {
+        "name": "noise_floor",
+        "kind": "silence",
+        "start": 491520,
+        "end": 731520,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_noise_floor",
+        "kind": "silence",
+        "start": 731520,
+        "end": 741120,
+        "fs": 48000
+      },
+      {
+        "name": "sync_solo_golay",
+        "kind": "sync",
+        "start": 741120,
+        "end": 743040,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_solo_golay",
+        "kind": "silence",
+        "start": 743040,
+        "end": 752640,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk1_A",
+        "kind": "solo_golay_A",
+        "start": 752640,
+        "end": 979712,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk1_B",
+        "kind": "solo_golay_B",
+        "start": 979712,
+        "end": 1206784,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk2_A",
+        "kind": "solo_golay_A",
+        "start": 1206784,
+        "end": 1433856,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk2_B",
+        "kind": "solo_golay_B",
+        "start": 1433856,
+        "end": 1660928,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk3_A",
+        "kind": "solo_golay_A",
+        "start": 1660928,
+        "end": 1888000,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk3_B",
+        "kind": "solo_golay_B",
+        "start": 1888000,
+        "end": 2115072,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk4_A",
+        "kind": "solo_golay_A",
+        "start": 2115072,
+        "end": 2342144,
+        "fs": 48000
+      },
+      {
+        "name": "solo_golay_spk4_B",
+        "kind": "solo_golay_B",
+        "start": 2342144,
+        "end": 2569216,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_solo_golay",
+        "kind": "silence",
+        "start": 2569216,
+        "end": 2578816,
+        "fs": 48000
+      },
+      {
+        "name": "sync_solo_mls",
+        "kind": "sync",
+        "start": 2578816,
+        "end": 2580736,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_solo_mls",
+        "kind": "silence",
+        "start": 2580736,
+        "end": 2590336,
+        "fs": 48000
+      },
+      {
+        "name": "solo_mls_spk1",
+        "kind": "solo_mls",
+        "start": 2590336,
+        "end": 2817407,
+        "fs": 48000
+      },
+      {
+        "name": "solo_mls_spk2",
+        "kind": "solo_mls",
+        "start": 2817407,
+        "end": 3044478,
+        "fs": 48000
+      },
+      {
+        "name": "solo_mls_spk3",
+        "kind": "solo_mls",
+        "start": 3044478,
+        "end": 3271549,
+        "fs": 48000
+      },
+      {
+        "name": "solo_mls_spk4",
+        "kind": "solo_mls",
+        "start": 3271549,
+        "end": 3498620,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_solo_mls",
+        "kind": "silence",
+        "start": 3498620,
+        "end": 3508220,
+        "fs": 48000
+      },
+      {
+        "name": "sync_golay_hadamard",
+        "kind": "sync",
+        "start": 3508220,
+        "end": 3510140,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_golay_hadamard",
+        "kind": "silence",
+        "start": 3510140,
+        "end": 3519740,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row1_A",
+        "kind": "golay_hadamard_A",
+        "start": 3519740,
+        "end": 3746812,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row1_B",
+        "kind": "golay_hadamard_B",
+        "start": 3746812,
+        "end": 3973884,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row2_A",
+        "kind": "golay_hadamard_A",
+        "start": 3973884,
+        "end": 4200956,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row2_B",
+        "kind": "golay_hadamard_B",
+        "start": 4200956,
+        "end": 4428028,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row3_A",
+        "kind": "golay_hadamard_A",
+        "start": 4428028,
+        "end": 4655100,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row3_B",
+        "kind": "golay_hadamard_B",
+        "start": 4655100,
+        "end": 4882172,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row4_A",
+        "kind": "golay_hadamard_A",
+        "start": 4882172,
+        "end": 5109244,
+        "fs": 48000
+      },
+      {
+        "name": "golay_had_row4_B",
+        "kind": "golay_hadamard_B",
+        "start": 5109244,
+        "end": 5336316,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_golay_had",
+        "kind": "silence",
+        "start": 5336316,
+        "end": 5345916,
+        "fs": 48000
+      },
+      {
+        "name": "sync_mls_hadamard",
+        "kind": "sync",
+        "start": 5345916,
+        "end": 5347836,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_mls_hadamard",
+        "kind": "silence",
+        "start": 5347836,
+        "end": 5357436,
+        "fs": 48000
+      },
+      {
+        "name": "mls_had_row1",
+        "kind": "mls_hadamard",
+        "start": 5357436,
+        "end": 5584507,
+        "fs": 48000
+      },
+      {
+        "name": "mls_had_row2",
+        "kind": "mls_hadamard",
+        "start": 5584507,
+        "end": 5811578,
+        "fs": 48000
+      },
+      {
+        "name": "mls_had_row3",
+        "kind": "mls_hadamard",
+        "start": 5811578,
+        "end": 6038649,
+        "fs": 48000
+      },
+      {
+        "name": "mls_had_row4",
+        "kind": "mls_hadamard",
+        "start": 6038649,
+        "end": 6265720,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_mls_had",
+        "kind": "silence",
+        "start": 6265720,
+        "end": 6275320,
+        "fs": 48000
+      },
+      {
+        "name": "sync_gold",
+        "kind": "sync",
+        "start": 6275320,
+        "end": 6277240,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_gold",
+        "kind": "silence",
+        "start": 6277240,
+        "end": 6286840,
+        "fs": 48000
+      },
+      {
+        "name": "gold_all",
+        "kind": "gold",
+        "start": 6286840,
+        "end": 6448375,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_gold",
+        "kind": "silence",
+        "start": 6448375,
+        "end": 6457975,
+        "fs": 48000
+      },
+      {
+        "name": "sync_thd",
+        "kind": "sync",
+        "start": 6457975,
+        "end": 6459895,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_sync_thd",
+        "kind": "silence",
+        "start": 6459895,
+        "end": 6469495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_100Hz",
+        "kind": "thd",
+        "start": 6469495,
+        "end": 6661495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_250Hz",
+        "kind": "thd",
+        "start": 6661495,
+        "end": 6853495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_500Hz",
+        "kind": "thd",
+        "start": 6853495,
+        "end": 7045495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_1000Hz",
+        "kind": "thd",
+        "start": 7045495,
+        "end": 7237495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_2000Hz",
+        "kind": "thd",
+        "start": 7237495,
+        "end": 7429495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_4000Hz",
+        "kind": "thd",
+        "start": 7429495,
+        "end": 7621495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk1_8000Hz",
+        "kind": "thd",
+        "start": 7621495,
+        "end": 7813495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_100Hz",
+        "kind": "thd",
+        "start": 7813495,
+        "end": 8005495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_250Hz",
+        "kind": "thd",
+        "start": 8005495,
+        "end": 8197495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_500Hz",
+        "kind": "thd",
+        "start": 8197495,
+        "end": 8389495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_1000Hz",
+        "kind": "thd",
+        "start": 8389495,
+        "end": 8581495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_2000Hz",
+        "kind": "thd",
+        "start": 8581495,
+        "end": 8773495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_4000Hz",
+        "kind": "thd",
+        "start": 8773495,
+        "end": 8965495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk2_8000Hz",
+        "kind": "thd",
+        "start": 8965495,
+        "end": 9157495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_100Hz",
+        "kind": "thd",
+        "start": 9157495,
+        "end": 9349495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_250Hz",
+        "kind": "thd",
+        "start": 9349495,
+        "end": 9541495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_500Hz",
+        "kind": "thd",
+        "start": 9541495,
+        "end": 9733495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_1000Hz",
+        "kind": "thd",
+        "start": 9733495,
+        "end": 9925495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_2000Hz",
+        "kind": "thd",
+        "start": 9925495,
+        "end": 10117495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_4000Hz",
+        "kind": "thd",
+        "start": 10117495,
+        "end": 10309495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk3_8000Hz",
+        "kind": "thd",
+        "start": 10309495,
+        "end": 10501495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_100Hz",
+        "kind": "thd",
+        "start": 10501495,
+        "end": 10693495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_250Hz",
+        "kind": "thd",
+        "start": 10693495,
+        "end": 10885495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_500Hz",
+        "kind": "thd",
+        "start": 10885495,
+        "end": 11077495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_1000Hz",
+        "kind": "thd",
+        "start": 11077495,
+        "end": 11269495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_2000Hz",
+        "kind": "thd",
+        "start": 11269495,
+        "end": 11461495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_4000Hz",
+        "kind": "thd",
+        "start": 11461495,
+        "end": 11653495,
+        "fs": 48000
+      },
+      {
+        "name": "thd_spk4_8000Hz",
+        "kind": "thd",
+        "start": 11653495,
+        "end": 11845495,
+        "fs": 48000
+      },
+      {
+        "name": "gap_after_thd",
+        "kind": "silence",
+        "start": 11845495,
+        "end": 11855095,
+        "fs": 48000
+      }
+    ]
+  },
+  "sync_mode": "full",
+  "offset_samples": 5270,
+  "drift": {
+    "eps": 1.0210760793129281e-05,
+    "residual_eps": 7.80066372206068e-10
+  },
+  "zero_index": 256,
+  "ir_len_after_zero": 96000,
+  "excitation_gain": null,
+  "files": [
+    "decoded_solo_golay_spk1.npy",
+    "decoded_solo_golay_spk2.npy",
+    "decoded_solo_golay_spk3.npy",
+    "decoded_solo_golay_spk4.npy",
+    "decoded_golay_hadamard_spk1.npy",
+    "decoded_golay_hadamard_spk2.npy",
+    "decoded_golay_hadamard_spk3.npy",
+    "decoded_golay_hadamard_spk4.npy",
+    "decoded_solo_mls_spk1.npy",
+    "decoded_solo_mls_spk2.npy",
+    "decoded_solo_mls_spk3.npy",
+    "decoded_solo_mls_spk4.npy",
+    "decoded_mls_hadamard_spk1.npy",
+    "decoded_mls_hadamard_spk2.npy",
+    "decoded_mls_hadamard_spk3.npy",
+    "decoded_mls_hadamard_spk4.npy",
+    "decoded_gold_spk1.npy",
+    "decoded_gold_spk2.npy",
+    "decoded_gold_spk3.npy",
+    "decoded_gold_spk4.npy"
+  ]
+}

@@ -1,2 +1,8 @@
 poetry.lock
 __pycache__
+wyniki/inne/*
+tmp/
+git-backups/
+tests/
+rozne/
+colab/

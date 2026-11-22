@@ -97,7 +97,6 @@ def linear_chirp(fs, dur_s, f0=600.0, f1=6000.0, amp=0.6):
     return sig
 
 
-
 def write_wav_multichannel(path, fs, channels, peak=0.85):
     data = np.column_stack([np.asarray(ch, dtype=np.float32) for ch in channels])
 
@@ -107,6 +106,7 @@ def write_wav_multichannel(path, fs, channels, peak=0.85):
 
     os.makedirs(os.path.dirname(path) if os.path.dirname(path) else ".", exist_ok=True)
     sf.write(path, data, fs, subtype='FLOAT')
+    return float(peak / mx) if mx > 0 else 1.0
 
 
 def main():
@@ -181,9 +181,6 @@ def main():
         append_silence(f"gap_after_sync_{label}", len(gap))
 
 
-
-
-    # 0. OPÓŹNIENIE STARTOWE
     start_delay_samp = int(round(args.start_delay_ms / 1000 * fs))
     if start_delay_samp > 0:
         append_silence("start_delay", start_delay_samp)
@@ -193,7 +190,7 @@ def main():
         append_silence("noise_floor", noise_floor_samp)
         append_silence("gap_after_noise_floor", len(gap))
 
-    # 1. SOLO GOLAY
+
     append_sync("solo_golay")
     for j in range(n_spk):
         seg_a = np.concatenate([A, guard])
@@ -204,7 +201,7 @@ def main():
                    {j: seg_b})
     append_silence("gap_after_solo_golay", len(gap))
 
-    # 2. SOLO MLS
+
     append_sync("solo_mls")
     for j in range(n_spk):
         seg = np.concatenate([mls, guard])
@@ -212,7 +209,7 @@ def main():
                    {j: seg})
     append_silence("gap_after_solo_mls", len(gap))
 
-    # 3. GOLAY + HADAMARD
+
     append_sync("golay_hadamard")
     for i in range(h_size):
         data_a = {}
@@ -225,7 +222,7 @@ def main():
         append_all(f"golay_had_row{i+1}_B", "golay_hadamard_B", data_b)
     append_silence("gap_after_golay_had", len(gap))
 
-    # 4. MLS + HADAMARD
+
     append_sync("mls_hadamard")
     for i in range(h_size):
         data = {}
@@ -234,7 +231,7 @@ def main():
         append_all(f"mls_had_row{i+1}", "mls_hadamard", data)
     append_silence("gap_after_mls_had", len(gap))
 
-    # 5. MLS RECIPROCAL PAIR
+
     if n_spk == 2:
         append_sync("mls_reciprocal")
         data = {
@@ -244,7 +241,7 @@ def main():
         append_all("mls_reciprocal_pair", "mls_reciprocal", data)
         append_silence("gap_after_mls_reciprocal", len(gap))
 
-    # 6. GOLD
+
     append_sync("gold")
     data = {}
     for j in range(n_spk):
@@ -252,7 +249,7 @@ def main():
     append_all("gold_all", "gold", data)
     append_silence("gap_after_gold", len(gap))
 
-    # 6. THD
+
     thd_freqs = [int(f) for f in args.thd_freqs.split(",")]
     thd_dur = args.thd_dur_ms / 1000.0
     if thd_dur > 0 and thd_freqs:
@@ -265,14 +262,14 @@ def main():
         append_silence("gap_after_thd", len(gap))
 
 
-
     final = [np.concatenate(ch) for ch in channels]
     out_dir = os.path.abspath(args.out)
     os.makedirs(out_dir, exist_ok=True)
     wav_path = os.path.join(out_dir, "bundle.wav")
-    write_wav_multichannel(wav_path, fs, final, peak=args.peak)
+    excitation_gain = write_wav_multichannel(wav_path, fs, final, peak=args.peak)
     manifest_path = os.path.join(out_dir, "manifest.json")
     meta = {
+        "excitation_gain": excitation_gain,
         "speakers": n_spk,
         "fs": fs,
         "golay_n": args.golay_n,
